@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C50ACBF2008C2150025DBD7 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C50ACBE2008C2150025DBD7 /* ChecklistItem.swift */; };
 		1C55479E20079AF000FD5872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C55479D20079AF000FD5872 /* AppDelegate.swift */; };
 		1C5547A020079AF000FD5872 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C55479F20079AF000FD5872 /* ChecklistViewController.swift */; };
 		1C5547A320079AF000FD5872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C5547A120079AF000FD5872 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C50ACBE2008C2150025DBD7 /* ChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
 		1C55479A20079AF000FD5872 /* Checklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C55479D20079AF000FD5872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1C55479F20079AF000FD5872 /* ChecklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				1C55479D20079AF000FD5872 /* AppDelegate.swift */,
 				1C55479F20079AF000FD5872 /* ChecklistViewController.swift */,
+				1C50ACBE2008C2150025DBD7 /* ChecklistItem.swift */,
 				1C5547A120079AF000FD5872 /* Main.storyboard */,
 				1C5547A420079AF000FD5872 /* Assets.xcassets */,
 				1C5547A620079AF000FD5872 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C5547A020079AF000FD5872 /* ChecklistViewController.swift in Sources */,
+				1C50ACBF2008C2150025DBD7 /* ChecklistItem.swift in Sources */,
 				1C55479E20079AF000FD5872 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
