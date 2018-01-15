@@ -7,12 +7,19 @@
 //
 
 import UIKit
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+    func addItemViewController(_ controller: AddItemViewController, didFinisheAdding item: ChecklistItem)
+}
+
 
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarBtn: UIBarButtonItem!
+    weak var delegate: AddItemViewControllerDelegate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +46,14 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelBtnPressed(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        delegate?.addItemViewControllerDidCancel(self)
     }
     @IBAction func doneBtnPressed(_ sender: Any) {
-        print("Contents of the text field: \(textField.text!)")
+        let item = ChecklistItem()
+        item.text = textField.text!
+        item.checked = false
         
-        navigationController?.popViewController(animated: true)
+        delegate?.addItemViewController(self, didFinisheAdding: item)
         
     }
 }
