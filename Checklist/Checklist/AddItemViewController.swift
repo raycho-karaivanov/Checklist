@@ -47,8 +47,4 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         navigationController?.popViewController(animated: true)
         
     }
-    
-    
-    
-    
 }
