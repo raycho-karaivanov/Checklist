@@ -11,49 +11,11 @@ import UIKit
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var items = [ChecklistItem]()
-    //MARK: - Initialization
-    required init?(coder aDecoder: NSCoder) {
-        items = [ChecklistItem]()
-        
-        let row0item = ChecklistItem()
-        row0item.text = "Walk the dog"
-        row0item.checked = false
-        items.append(row0item)
-        
-        let row1item = ChecklistItem()
-        row1item.text = "Brush my teeth"
-        row1item.checked = true
-        items.append(row1item)
-        
-        let row2item = ChecklistItem()
-        row2item.text = "Learn iOS development"
-        row2item.checked = true
-        items.append(row2item)
-        
-        let row3item = ChecklistItem()
-        row3item.text = "Soccer practice"
-        row3item.checked = false
-        items.append(row3item)
-        
-        let row4item = ChecklistItem()
-        row4item.text = "Eat ice cream"
-        row4item.checked = true
-        items.append(row4item)
-        
-        let row5item = ChecklistItem()
-        row5item.text = "Go to sleep."
-        row5item.checked = true
-        items.append(row5item)
-        
-        super.init(coder: aDecoder)
-        
-        print("Documents folder is \(documentsDirectory())")
-        print("Data file path is: \(dataFilePath())")
-    }
+    
     //MARK: - ViewController lifecicle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadChecklistItems()
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     //MARK: - Protocol functions
@@ -114,6 +76,18 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
         } catch {
             print("Error encoding item array!")
+        }
+    }
+    //MARK: - Load Items Functionality
+    func loadChecklistItems() {
+        let path = dataFilePath()
+        if let data = try? Data(contentsOf: path) {
+            let decoder = PropertyListDecoder()
+            do {
+                items = try decoder.decode([ChecklistItem].self, from: data)
+            } catch {
+                print("Error decoding item aray!")
+            }
         }
     }
     
