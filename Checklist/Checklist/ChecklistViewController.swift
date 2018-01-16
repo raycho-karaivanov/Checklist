@@ -11,7 +11,7 @@ import UIKit
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var items = [ChecklistItem]()
-    
+    //MARK: - Initialization
     required init?(coder aDecoder: NSCoder) {
         items = [ChecklistItem]()
         
@@ -46,14 +46,17 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         items.append(row5item)
         
         super.init(coder: aDecoder)
+        
+        print("Documents folder is \(documentsDirectory())")
+        print("Data file path is: \(dataFilePath())")
     }
-
+    //MARK: - ViewController lifecicle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
+    //MARK: - Protocol functions
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailVC) {
         navigationController?.popViewController(animated: true)
     }
@@ -64,6 +67,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
                 configureText(for: cell, with: item)
             }
         }
+        saveCheckListItems()
         navigationController?.popViewController(animated: true)
     }
     
@@ -74,9 +78,10 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
+        saveCheckListItems()
         navigationController?.popViewController(animated: true)
     }
-    
+    //MARK: - UI Setup
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
        
         let label = cell.viewWithTag(1001) as! UILabel
@@ -92,8 +97,27 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.text
     }
+    //MARK: - Saving Functionality
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
     
-
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklist.plist")
+    }
+    
+    func saveCheckListItems() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(items)
+            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+        } catch {
+            print("Error encoding item array!")
+        }
+    }
+    
+    //MARK: - TableView Setup
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
@@ -117,14 +141,16 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        saveCheckListItems()
     }
-    
+    //MARK: delete Item
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         items.remove(at: indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        saveCheckListItems()
     }
-    
+    //MARK: -Deligation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItem" {
             let controller = segue.destination as! ItemDetailVC
