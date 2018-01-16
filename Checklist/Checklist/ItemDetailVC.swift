@@ -1,5 +1,5 @@
 //
-//  AddItemViewController.swift
+//  ItemDetailVC.swift
 //  Checklist
 //
 //  Created by Raycho Karaivanov on 15.01.18.
@@ -7,18 +7,19 @@
 //
 
 import UIKit
-protocol AddItemViewControllerDelegate: class {
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
-    func addItemViewController(_ controller: AddItemViewController, didFinisheAdding item: ChecklistItem)
+protocol ItemDetailViewControllerDelegate: class {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailVC)
+    func itemDetailViewController(_ controller: ItemDetailVC, didFinishAdding item: ChecklistItem)
+    func itemDetailViewController(_ controller: ItemDetailVC, didFinishEditing item: ChecklistItem)
 }
 
 
-class AddItemViewController: UITableViewController, UITextFieldDelegate {
+class ItemDetailVC: UITableViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarBtn: UIBarButtonItem!
-    weak var delegate: AddItemViewControllerDelegate?
+    weak var delegate: ItemDetailViewControllerDelegate?
     var itemToEtit: ChecklistItem?
     
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         if let item = itemToEtit {
             title = "Edit Item"
             textField.text = item.text
+            doneBarBtn.isEnabled = true
         }
     }
 
@@ -51,14 +53,18 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelBtnPressed(_ sender: Any) {
-        delegate?.addItemViewControllerDidCancel(self)
+        delegate?.itemDetailViewControllerDidCancel(self)
     }
     @IBAction func doneBtnPressed(_ sender: Any) {
+        if let itemToEdit = itemToEtit {
+            itemToEdit.text = textField.text!
+            delegate?.itemDetailViewController(self, didFinishEditing: itemToEtit!)
+        } else {
         let item = ChecklistItem()
         item.text = textField.text!
         item.checked = false
         
-        delegate?.addItemViewController(self, didFinisheAdding: item)
-        
+        delegate?.itemDetailViewController(self, didFinishAdding: item)
+        }
     }
 }
