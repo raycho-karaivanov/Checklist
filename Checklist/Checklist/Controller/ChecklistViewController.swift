@@ -11,12 +11,14 @@ import UIKit
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var items = [ChecklistItem]()
+    var checklist: Checklist!
     
     //MARK: - ViewController lifecicle
     override func viewDidLoad() {
         super.viewDidLoad()
         loadChecklistItems()
         navigationItem.largeTitleDisplayMode = .never
+        title = checklist.name
     }
     //MARK: - Protocol functions
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailVC) {
