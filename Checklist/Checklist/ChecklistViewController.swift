@@ -16,7 +16,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         loadChecklistItems()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .never
     }
     //MARK: - Protocol functions
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailVC) {
