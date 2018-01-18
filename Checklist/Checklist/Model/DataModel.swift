@@ -47,6 +47,12 @@ class DataModel {
         }
     }
     
+    // MARK:- Sort the Checklists
+    
+    func sortChecklists() {
+        lists.sort(by: { checklist1, checklist2 in return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending })
+    }
+    
     // MARK:- Load and Save Functions
     
     func documentsDirectory() -> URL {
@@ -74,6 +80,7 @@ class DataModel {
             let decoder = PropertyListDecoder()
             do {
                 lists = try decoder.decode([Checklist].self, from: data)
+                sortChecklists()
             } catch {
                 print("Error decoding item array!")
             }
