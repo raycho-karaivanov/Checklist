@@ -13,6 +13,11 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationContro
     var dataModel: DataModel!
     // MARK:- View lifecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -42,6 +47,14 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationContro
         let checklist = dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
+        let count = checklist.counUncheckedItems()
+        if checklist.items.count == 0 {
+            cell.detailTextLabel?.text = "No Items!"
+        }else if count == 0 {
+            cell.detailTextLabel?.text = "All Done!"
+        }else {
+            cell.detailTextLabel?.text = "\(count) Remaining"
+        }
         return cell
     }
     
@@ -74,7 +87,7 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationContro
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
             return cell
         } else {
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
     }
     
