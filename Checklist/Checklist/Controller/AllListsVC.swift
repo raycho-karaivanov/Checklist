@@ -8,12 +8,25 @@
 
 import UIKit
 
-class AllListsVC: UITableViewController, ListDtailVCDelegate {
+class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationControllerDelegate {
 
     var dataModel: DataModel!
+    // MARK:- View lifecycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self
+        let index = dataModel.indexOfSelectedChecklist
+        if index >= 0 && index < dataModel.lists.count {
+            let checklist = dataModel.lists[index]
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
     }    
@@ -33,6 +46,7 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dataModel.indexOfSelectedChecklist = indexPath.row
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
@@ -64,6 +78,13 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate {
         }
     }
     
+    // MARK:- UINavigationController Delegates
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController === self {
+            dataModel.indexOfSelectedChecklist = -1
+        }
+    }
     // MARK:- ListDetailVC Delegates
     
     func listDetailVCDidCancel(_ controller: ListDetailVC) {
