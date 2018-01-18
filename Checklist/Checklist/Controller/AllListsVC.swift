@@ -48,6 +48,7 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationContro
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
         let count = checklist.counUncheckedItems()
+        
         if checklist.items.count == 0 {
             cell.detailTextLabel?.text = "No Items!"
         }else if count == 0 {
@@ -55,6 +56,9 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationContro
         }else {
             cell.detailTextLabel?.text = "\(count) Remaining"
         }
+        
+        cell.imageView?.image = UIImage(named: checklist.iconName)
+        
         return cell
     }
     
