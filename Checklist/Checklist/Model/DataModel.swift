@@ -22,6 +22,16 @@ class DataModel {
         }
     }
     
+    // MARK:- Unique itemID
+    
+    class func nextChecklistItemID() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemID = UserDefaults.standard.integer(forKey: "ChecklistItemID")
+        userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+        userDefaults.synchronize()
+        return itemID
+    }
+    
     // MARK:- Set UserDefault default value
     
     func registerDefaults() {
