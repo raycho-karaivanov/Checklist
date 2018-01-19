@@ -65,6 +65,7 @@ class AllListsVC: UITableViewController, ListDtailVCDelegate, UINavigationContro
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dataModel.indexOfSelectedChecklist = indexPath.row
         let checklist = dataModel.lists[indexPath.row]
+        
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
     
