@@ -97,8 +97,7 @@ class ListDetailVC : UITableViewController, UITextFieldDelegate, IconPickerVCDel
             checklist.iconName = iconName
             delegate?.listDetailVC(self, didFinishEditing: checklist)
         } else {
-            let checklist = Checklist(name: textField.text!)
-            checklist.iconName = iconName
+            let checklist = Checklist(name: textField.text!, iconName: iconName)
             delegate?.listDetailVC(self, didFinishAdding: checklist)
         }
     }
